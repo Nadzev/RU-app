@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  ru-database:
+    image: mongo
+    container_name: RU-app
+    volumes:
+      - "./:/data/db"
+    environment:
+      MONGO_INITDB_DATABASE: app-database
+      MONGO_INITDB_ROOT_USERNAME: ru-app
+      MONGO_INITDB_ROOT_PASSWORD: app-password
+    ports:
+      -"27017":"27017"
