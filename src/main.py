@@ -1,8 +1,7 @@
 import asyncio
+import os
 
 from motor.motor_asyncio import AsyncIOMotorClient
-
-import os
 
 
 class Connect:
@@ -17,8 +16,7 @@ class Connect:
             password=os.getenv('DATABASE_PASS'),
             authSource='admin',
         )
-        print(cls.client)
-        return cls.client
+        return cls.client.ru
 
     @classmethod
     async def disconnect_database(cls):
@@ -28,10 +26,13 @@ class Connect:
 async def main():
     try:
         client = await Connect.connect_to_database()
-    finally:
+        print("teste")
+        client["ru"].insert_one({"teste": "13435"})
+    except Exception:
         await Connect.disconnect_database()
 
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())
+    loop.run_forever()
