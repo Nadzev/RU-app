@@ -4,7 +4,7 @@ import os
 from motor.motor_asyncio import AsyncIOMotorClient
 
 
-class Connect:
+class ConnectionHandler:
     client = None
 
     @classmethod
