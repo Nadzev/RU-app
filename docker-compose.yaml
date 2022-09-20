@@ -1,25 +1,25 @@
-version: '3'
+version: '3.4'
 services:
   ru-database:
     image: mongo
-    container_name: ru-db
+    container_name: ru-database
     environment:
-      MONGO_INITDB_DATABASE: app-database
-      MONGO_INITDB_ROOT_USERNAME: ru-app
-      MONGO_INITDB_ROOT_PASSWORD: app-password
+      - MONGO_INITDB_DATABASE=app-database
+      - MONGO_INITDB_ROOT_USERNAME=ru-app
+      - MONGO_INITDB_ROOT_PASSWORD=app-password
     ports:
-      - "27017:27017"
+      - 27030:27017
 
-  ru-app:
-    image: ru-app
-    container_name: ru-app
-    build:
-      context: .
-      dockerfile: Dockerfile
-    env_file:
-      - config/.env
-    volumes:
-      - "./:/app"
-    ports:
-      - "8000:8000"
+#  ru-app:
+#    image: ru-app
+#    container_name: ru-app
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    env_file:
+#      - config/.env
+#    volumes:
+#      - "./:/usr/src/app"
+#    ports:
+#      - "8000:8000"
 
