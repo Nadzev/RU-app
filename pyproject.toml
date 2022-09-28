@@ -11,6 +11,7 @@ uvicorn = "^0.18.3"
 mongoengine = "^0.24.2"
 pydantic = "^1.10.2"
 python-dotenv = "^0.21.0"
+paho-mqtt = "^1.6.1"
 
 [tool.poetry.dev-dependencies]
 

@@ -2,6 +2,8 @@ import os
 
 from fastapi import APIRouter
 
+from schemas.mongoengine.ru_model import UsersMongoengine
+
 router = APIRouter(prefix=os.getenv("API_ROUTER_PREFIX", ""))
 
 
