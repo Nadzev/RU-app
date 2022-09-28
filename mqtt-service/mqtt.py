@@ -28,11 +28,11 @@ class Mqtt:
         print('caiuuuu')
         
         # enable TLS for secure connection
-        self.client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
+        #self.client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
         # set username and password
-        self.client.username_pw_set('ruapp', 'ruapp123')
+        #self.client.username_pw_set('ruapp', 'ruapp123')
         # connect to HiveMQ Cloud on port 8883 (default for MQTT)
-        self.client.connect('1585424bfe794383997ea302ee1d1e4e.s1.eu.hivemq.cloud', 8883)
+        #self.client.connect('1585424bfe794383997ea302ee1d1e4e.s1.eu.hivemq.cloud', 8883)
 
         self.client.on_message = self.on_message
         self.client.on_disconnect = self.on_disconnect
@@ -40,11 +40,11 @@ class Mqtt:
 
         self.client.subscribe('my/teste')
         self.client.loop_forever()
-        # user = os.getenv('MQTT_USER')
-        # password = os.getenv('MQTT_PASSWORD')
-        #host = os.getenv('MQTT_BROKER_HOST')
-        #print(host)
-        #self.client.connect(host)
+        user = os.getenv('MQTT_USER')
+        password = os.getenv('MQTT_PASSWORD')
+        host = os.getenv('MQTT_BROKER_HOST')
+        print(host)
+        self.client.connect(host)
         
 
 

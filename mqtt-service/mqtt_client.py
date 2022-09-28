@@ -38,11 +38,13 @@ client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
 client.on_connect = on_connect
 
 # enable TLS for secure connection
-client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
+#client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
 # set username and password
-client.username_pw_set("ruapp", "ruapp123")
+#client.username_pw_set("ruapp", "ruapp123")
+#client.username_pw_set("admin", "admin")
 # connect to HiveMQ Cloud on port 8883 (default for MQTT)
-client.connect("1585424bfe794383997ea302ee1d1e4e.s1.eu.hivemq.cloud", 8883)
+#client.connect("1585424bfe794383997ea302ee1d1e4e.s1.eu.hivemq.cloud", 8883)
+client.connect("172.10.200.64", 1883)
 
 # setting callbacks, use separate functions like above for better visibility
 client.on_subscribe = on_subscribe
