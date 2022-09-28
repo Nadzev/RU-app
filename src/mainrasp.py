@@ -7,6 +7,7 @@ from datetime import datetime
 import board
 import digitalio
 import adafruit_character_lcd.character_lcd as characterlcd
+
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 from  gpiozero import Servo
@@ -27,16 +28,17 @@ lcd = characterlcd.Character_LCD_Mono(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6,
                                       lcd_d7, lcd_columns, lcd_rows)
 servo = Servo(6) # 6 eh o GPIO que ele ta conectado 
 reader = SimpleMFRC522()
-LEDvermelho = 37 # Vamos utilizar o pino 36 da placa
-LEDverde = 36
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(LEDvermelho, GPIO.OUT)
-GPIO.setup(LEDverde, GPIO.OUT)
+LEDvermelho = digitalio.DigitalOut(board.D26)
+LEDverde = digitalio.DigitalOut(board.D16)
+LEDvermelho.direction = digitalio.Direction.OUTPUT
+LEDverde.direction = digitalio.Direction.OUTPUT
+
+horaatual  = datetime.now()
 
 # setup inicial 
-lcd.message = "---------- RU ---------- \n Passe um cartão!"
+lcd.message = "------- RU ------- \n Passe um cartão!"
 servo.min()
-GPIO.output(LEDverde, True) 
+LEDverde.value = True
 
 # loop 
 try:
@@ -45,8 +47,4 @@ try:
 		print(id," ",type(id))
 		print("\n",str(id), " ", type(id))
 finally:
-        GPIO.cleanup()
-        
-tempo = time.strftime('%d-%m-%Y %H:%M:%S', time.localtime()) # "28-09-2022 13:21:19" <- exemplo
-
-print(tempo)
+        print("acabou")
