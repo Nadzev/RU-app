@@ -9,7 +9,6 @@ from src.infra.mongoengine.mongoengine import MongoengineBaseModel
 
 
 class UsersMongoengine(EmbeddedDocument):
-    # TODO: mudar rfid para int
     rfid = IntField()
     name = StringField()
     credits = IntField()
