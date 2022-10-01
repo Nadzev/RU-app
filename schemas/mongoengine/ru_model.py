@@ -1,6 +1,6 @@
 from mongoengine import Document, EmbeddedDocument
 from mongoengine.fields import (
-    StringField, UUIDField, DateTimeField, IntField,
+    StringField, UUIDField, DateTimeField, FloatField,IntField,
     EmbeddedDocumentField
 )
 
@@ -11,7 +11,7 @@ from src.infra.mongoengine.mongoengine import MongoengineBaseModel
 class UsersMongoengine(EmbeddedDocument):
     rfid = IntField()
     name = StringField()
-    credits = IntField()
+    credits = FloatField()
     created_at = DateTimeField()
 
     @classmethod

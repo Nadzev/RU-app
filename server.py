@@ -1,33 +1,20 @@
-import paho.mqtt.client as paho
+import logging
+import os
 
+import uvicorn as uvicorn
 
-def on_connect(client, userdata, flags, rc, properties=None):
-    print("CONNACK received with code %s." % rc)
+from dotenv import load_dotenv
 
+from src.ui.http import app
+print('executando')
 
-def on_publish(client, userdata, mid, properties=None):
-    print("mid: " + str(mid))
-
-
-def on_subscribe(client, userdata, mid, granted_qos, properties=None):
-    print("Subscribed: " + str(mid) + " " + str(granted_qos))
-
-
-def on_message(client, userdata, msg):
-    print("TESTE" + msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-
-
-client = paho.Client(client_id="", userdata=None, protocol=paho.MQTTv5)
-client.on_connect = on_connect
-
-client.connect("172.30.18.146", 1883)
-
-client.on_subscribe = on_subscribe
-client.on_message = on_message
-client.on_publish = on_publish
-
-client.subscribe("ru/#", qos=1)
-
-client.publish("ru/est", payload="aaaaa", qos=1)
-
-client.loop_forever()
+# logger = logging.getLogger("uvicorn.error")
+# print(logger.info)
+if __name__ == "__main__":
+    path_env = "config/.env"
+    load_dotenv(path_env)
+    uvicorn.run(
+        app,
+        host=os.getenv("API_HOST", "localhost"),
+        log_level=logging.INFO
+    )

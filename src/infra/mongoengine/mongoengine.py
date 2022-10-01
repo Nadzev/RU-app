@@ -10,7 +10,8 @@ class MongoDatabase:
     @classmethod
     async def connect(cls):
         try:
-            connect(
+            logging.info("Connection established to mongo database")
+            return connect(
                 db=os.getenv("MONGO_NAME"),
                 host=os.getenv("MONGO_HOST"),
                 port=int(os.getenv("MONGO_PORT")),
@@ -18,7 +19,7 @@ class MongoDatabase:
                 password=os.getenv("MONGO_PASSWORD"),
                 authentication_source=os.getenv("MONGO_AUTH")
             )
-            logging.info("Connection established to mongo database")
+          
         except ValidationError as validation_error:
             logging.exception("Invalid Cosmo url", exc_info=validation_error)
 
