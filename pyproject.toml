@@ -6,7 +6,12 @@ authors = ["Victor Hugo Santos de Lima <vhsdl.eng19@uea.edu.br>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-motor = "^3.0.0"
+fastapi = "^0.85.0"
+uvicorn = "^0.18.3"
+mongoengine = "^0.24.2"
+pydantic = "^1.10.2"
+python-dotenv = "^0.21.0"
+paho-mqtt = "^1.6.1"
 
 [tool.poetry.dev-dependencies]
 
