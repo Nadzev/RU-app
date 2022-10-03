@@ -3,11 +3,24 @@ from datetime import datetime
 import json
 
 class MessageHandler:  
+    
+    
     @classmethod
     def execute_query(cls,payload):
+        from src.ui.http import mqtt
         print(payload)
         payload = json.loads(payload)
-        query_result = UserRepository.query_user_by_id(payload)
+        query_result = None
+        try:
+            query_result = UserRepository.query_user_by_id(payload)
+        
+        except Exception as error:
+            print(error)
+            msg = json.dumps({"message":"Usuario nao encontrado"})
+            mqtt.client.publish("ru/confirm",msg,qos=1)
+            return {"Not found":"User not founded"}
+        
+        
         if query_result:
             print(f'query result ->> {query_result["user"]}')
             cls.validate_credits(query_result["user"])
@@ -41,11 +54,12 @@ class MessageHandler:
         time_user = user["created_at"] 
         if credits > 1.8 and cls.user_verify_year(time_user):
             value = UserRepository.query_update_user(user)
+            updated_user["message"] = "Compra efetuada!"
             updated_user = json.dumps(updated_user)
             mqtt.client.publish("ru/confirm",updated_user, qos=1)
             
         else:
-            updated_user["message"] = "User does not have enough credit"
+            updated_user["message"] = "Usuario nao tem credito suficiente"
             updated_user = json.dumps(updated_user)
             mqtt.client.publish("ru/confirm",updated_user,qos=1)
         

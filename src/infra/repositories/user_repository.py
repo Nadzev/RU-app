@@ -1,4 +1,5 @@
 
+from xml.dom import NotFoundErr
 from schemas.mongoengine import AttendanceMongoengine
 
 class UserRepository:
@@ -9,7 +10,14 @@ class UserRepository:
     
     @classmethod
     def query_user_by_id(cls,user):
-        query_result = AttendanceMongoengine.objects.get(user__rfid=user['rfid'])
+        query_result = None
+        try: 
+            query_result = AttendanceMongoengine.objects.get(user__rfid=user['rfid'])
+            
+        except Exception as error:
+            # print(error)
+            raise NotFoundErr('Usuário não encontrado')
+        
         return query_result
     
     @classmethod
