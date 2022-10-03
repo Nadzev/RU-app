@@ -12,10 +12,12 @@ class UserRepository:
     def query_user_by_id(cls,user):
         query_result = None
         try: 
-            query_result = AttendanceMongoengine.objects.get(user__rfid=user['rfid'])
-            
+            query_result = AttendanceMongoengine.objects(user__rfid=user['rfid'])
+            query_result = list(query_result)
+            query_result = query_result[-1]
+            print(query_result,"AAAAAAAAAAAAAAAAAA")
         except Exception as error:
-            # print(error)
+            print(error)
             raise NotFoundErr('Usuário não encontrado')
         
         return query_result

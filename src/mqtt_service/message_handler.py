@@ -1,7 +1,10 @@
 from src.infra.repositories.user_repository import UserRepository
+from schemas.pydantic.ru_model_pydantic import Attendance, User
 from datetime import datetime
 import json
+from schemas.mongoengine.ru_model import AttendanceMongoengine
 
+from bson import ObjectId
 class MessageHandler:  
     
     
@@ -51,18 +54,39 @@ class MessageHandler:
         updated_user["user"]["rfid"] =  user["rfid"]
         credits = user["credits"]
         updated_user["credits"] = credits
-        time_user = user["created_at"] 
-        if credits > 1.8 and cls.user_verify_year(time_user):
+        time_user = user["created_at"]
+
+
+        if not cls.user_verify_year(time_user):
+            updated_user["message"] = "Cartao passou da validade!"
+            updated_user = json.dumps(updated_user)
+            mqtt.client.publish("ru/confirm",updated_user,qos=1)
+
+        elif credits > 1.8 and cls.user_verify_year(time_user): #????????????
+
+            _user = User(
+                rfid=updated_user["user"]["rfid"],
+                name=updated_user["user"]["name"],
+                credits=float(user["credits"])-1.8,
+                created_at=time_user)
+    
+            _attendance = Attendance(id=ObjectId(), user=_user, clock_in=datetime.utcnow())
+            attendance_db = AttendanceMongoengine.from_entity(_attendance)
+            attendance_db.save()
+
             value = UserRepository.query_update_user(user)
+            
             updated_user["message"] = "Compra efetuada!"
             updated_user = json.dumps(updated_user)
             mqtt.client.publish("ru/confirm",updated_user, qos=1)
-            
-        else:
+        elif(credits<1.8):
             updated_user["message"] = "Usuario nao tem credito suficiente"
             updated_user = json.dumps(updated_user)
             mqtt.client.publish("ru/confirm",updated_user,qos=1)
-        
+        #elif(credits>1.8 and not cls.user_verify_year(time_user)):
+            #updated_user["message"] = "Cartao passou da validade!"
+            #updated_user = json.dumps(updated_user)
+            #mqtt.client.publish("ru/confirm",updated_user,qos=1)
             
     
     

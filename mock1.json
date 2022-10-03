@@ -1,0 +1,55 @@
+[{
+    "_id": {
+        "$oid": "674b3299a28db345d1620c98"
+    },
+    "user": {
+        "rfid": {
+            "$numberLong": "19347947958"
+        },
+        "name": "Fernando",
+        "credits": 20.00,
+        "created_at": {
+            "$date": "2019-10-03T19:06:01.629Z"
+        }
+    },
+    "clock_in": {
+        "$date": "2022-10-05T20:06:01.629Z"
+    }
+},
+{
+    "_id": {
+        "$oid": "434b3299a28db335d1620c98"
+    },
+    "user": {
+        "rfid": {
+            "$numberLong": "19347947958"
+        },
+        "name": "Fernando",
+        "credits": 19.50,
+        "created_at": {
+            "$date": "2019-10-03T19:06:01.629Z"
+        }
+    },
+    "clock_in": {
+        "$date": "2022-10-06T20:06:01.629Z"
+    }
+},
+{
+    "_id": {
+        "$oid": "634b3299a28db335d1620c98"
+    },
+    "user": {
+        "rfid": {
+            "$numberLong": "19347947958"
+        },
+        "name": "Fernando",
+        "credits": 18.0,
+        "created_at": {
+            "$date": "2019-10-03T19:06:01.629Z"
+        }
+    },
+    "clock_in": {
+        "$date": "2022-10-07T20:06:01.629Z"
+    }
+}]
+

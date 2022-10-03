@@ -9,6 +9,8 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=app-password
     ports:
       - 27030:27017
+    volumes:
+      - ~/apps/mongo:/data/db
 
 #  ru-app:
 #    image: ru-app
